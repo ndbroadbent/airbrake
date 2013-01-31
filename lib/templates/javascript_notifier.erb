@@ -1,7 +1,6 @@
 <%= javascript_tag %Q{
   (function(){
-    var notifierJsScheme = (("https:" == document.location.protocol) ? "https://" : "http://");
-    document.write(unescape("%3Cscript src='" + notifierJsScheme + "#{asset_path('airbrake_notifier.js').gsub(/^https?:\/\//, '')}' type='text/javascript'%3E%3C/script%3E"));
+    document.write(unescape("%3Cscript src='//#{asset_path('airbrake_notifier.js').gsub(/^(https?:)?\/\//, '')}' type='text/javascript'%3E%3C/script%3E"));
   })();
 }%>
 <%= javascript_tag %Q{
