@@ -13,6 +13,10 @@ module Airbrake
         port = Airbrake.configuration.port
         host << ":#{port}" unless [80, 443].include?(port)
 
+        # Send null instead of empty hash if user not present.
+        user = airbrake_current_user
+        user = nil if user.blank?
+
         options              = {
           :file              => path,
           :layout            => false,
@@ -23,7 +27,8 @@ module Airbrake
             :environment     => Airbrake.configuration.environment_name,
             :action_name     => action_name,
             :controller_name => controller_name,
-            :url             => request.url
+            :url             => request.url,
+            :user            => user
           }
         }
       end
