@@ -196,10 +196,9 @@ module Airbrake
         end
         unless user.blank?
           notice.tag!("current-user") do |u|
-            u.tag!("id",user[:id])
-            u.tag!("name",user[:name])
-            u.tag!("email",user[:email])
-            u.tag!("username",user[:username])
+            user.each do |key, value|
+              u.tag!(key.to_s, value)
+            end
           end
         end
         unless framework.blank?
@@ -238,9 +237,9 @@ module Airbrake
            end.tap do |hash|
             next if user.blank?
 
-            hash['userId']    = user[:id]
-            hash['userName']  = user[:name]
-            hash['userEmail'] = user[:email]
+            user.each do |key, value|
+              hash["user#{key.to_s.capitalize}"] = value
+            end
           end
 
       }.tap do |hash|
