@@ -13,7 +13,11 @@ module Airbrake::RakeHandler
         (Airbrake.configuration.rescue_rake_exceptions ||
           (Airbrake.configuration.rescue_rake_exceptions===nil && !self.tty_output?))
 
-      Airbrake.notify_or_ignore(ex, :component => 'rake', :action => reconstruct_command_line, :cgi_data => environment_info)
+      Airbrake.notify_or_ignore(ex,
+                                :component => 'rake',
+                                :action    => reconstruct_command_line,
+                                :cgi_data  => environment_info,
+                                :ignore    => Airbrake.configuration.ignore_rake)
     end
 
     display_error_message_without_airbrake(ex)
